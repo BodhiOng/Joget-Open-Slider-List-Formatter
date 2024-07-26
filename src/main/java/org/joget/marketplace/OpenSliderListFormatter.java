@@ -2,6 +2,7 @@ package org.joget.marketplace;
 
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.joget.apps.app.service.AppPluginUtil;
 import org.joget.apps.app.service.AppUtil;
@@ -10,6 +11,7 @@ import org.joget.apps.datalist.model.DataList;
 import org.joget.apps.datalist.model.DataListColumn;
 import org.joget.apps.datalist.model.DataListColumnFormatDefault;
 import org.joget.apps.datalist.service.DataListService;
+import org.joget.plugin.base.PluginManager;
 import org.joget.workflow.util.WorkflowUtil;
 
 public class OpenSliderListFormatter extends DataListColumnFormatDefault  {
@@ -48,17 +50,6 @@ public class OpenSliderListFormatter extends DataListColumnFormatDefault  {
         return AppUtil.readPluginResource(getClassName(), "/properties/OpenSliderListFormatter.json", null, true, MESSAGE_PATH);
     }
     
-//    protected String getValue(Object row, String columnName) {
-//        String paramValue = "";
-//        
-//        try {
-//            paramValue = (String) ((HashMap)row).get(columnName);
-//            return (paramValue != null) ? URLEncoder.encode(paramValue, "UTF-8") : null;
-//        } catch (Exception ex) {
-//            return "";
-//        }
-//    }
-    
     public String getHref() {
         return getPropertyString("href");
     }
@@ -85,99 +76,18 @@ public class OpenSliderListFormatter extends DataListColumnFormatDefault  {
         HttpServletRequest request = WorkflowUtil.getHttpServletRequest();
         
         if (request != null && request.getAttribute(getClassName()) == null) {
-            content += "<!-- Slider Container -->\n" +
-                        "<div class=\"slider-container\" id=\"slider\">\n" +
-                        "    <div class=\"slider-content\">\n" +
-                        "    </div>\n" +
-                        "</div>\n" +
-                        "\n" +
-                        "<style>\n" +
-                        "    \n" +
-                        "\n" +
-                        ".slider-container {\n" +
-                        "    position: fixed;\n" +
-                        "    top: 0;\n" +
-                        "    right: -100%; /* Initially off-screen */\n" +
-                        "    width: 40%; /* Adjust as needed */\n" +
-                        "    height: 100%;\n" +
-                        "    background-color: #fff;\n" +
-                        "    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);\n" +
-                        "    transition: right 0.3s ease-in-out;\n" +
-                        "    overflow-y: auto; /* Enable vertical scrolling if content exceeds height */\n" +
-                        "    z-index: 9999;\n" +
-                        "}\n" +
-                        "\n" +
-                        ".slider-content {\n" +
-                        "    padding: 20px;\n" +
-                        "    height: 100%; /* Take full height of slider container */\n" +
-                        "    box-sizing: border-box; /* Ensure padding is included in height calculation */\n" +
-                        "}\n" +
-                        "\n" +
-                        ".slider-container.open {\n" +
-                        "    right: 0;\n" +
-                        "}\n" +
-                        "</style>\n" +
-                        "\n" +
-                        "<script>\n" +
-                        "    document.addEventListener('DOMContentLoaded', function() {\n" +
-                        "        closeSlider();\n" +
-                        "    });\n" +
-                        "\n" +
-                        "    var openSliderBtn = document.getElementById('open-slider');\n" +
-                        "    var closeSliderBtn = document.getElementById('close-slider');\n" +
-                        "    var slider = document.getElementById('slider');\n" +
-                        "    var sliderContent = document.querySelector('.slider-content');\n" +
-                        "\n" +
-                        "    // Function to open the slider\n" +
-                        "    function openSlider(url) {\n" +
-                        "        console.log(\"opening\" + url);\n" +
-                        "        \n" +
-                        "        // Clear previous content if any\n" +
-                        "        sliderContent.innerHTML = '';\n" +
-                        "        \n" +
-                        "        // Create an iframe to load the external content\n" +
-                        "        var iframe = document.createElement('iframe');\n" +
-                        "        iframe.src = url;\n" +
-                        "        iframe.style.width = '100%';\n" +
-                        "        iframe.style.height = '100%'; // Take full height of slider content area\n" +
-                        "        iframe.style.border = 'none';\n" +
-                        "        \n" +
-                        "        // Append the iframe to slider content\n" +
-                        "        sliderContent.appendChild(iframe);\n" +
-                        "        \n" +
-                        "        slider.classList.add('open');\n" +
-                        "        \n" +
-                        "        // Add event listener to close slider when clicking outside\n" +
-                        "        document.addEventListener('click', clickOutsideHandler);\n" +
-                        "    }\n" +
-                        "\n" +
-                        "    // Function to close the slider\n" +
-                        "    function closeSlider() {\n" +
-                        "        console.log(\"closing\");\n" +
-                        "        sliderContent.innerHTML = ''; // Clear iframe content\n" +
-                        "        slider.classList.remove('open');\n" +
-                        "        \n" +
-                        "        // Remove event listener for clicking outside\n" +
-                        "        document.removeEventListener('click', clickOutsideHandler);\n" +
-                        "    }\n" +
-                        "\n" +
-                        "    // Event listener for clicking outside the slider\n" +
-                        "    function clickOutsideHandler(e) {\n" +
-                        "        eClass = \"\";\n" +
-                        "        eClasses = [];\n" +
-                        "        try{\n" +
-                        "            eClass = e.target.attributes.getNamedItem(\"class\").value;\n" +
-                        "            eClasses = eClass.split(\" \");\n" +
-                        "        }catch(e){\n" +
-                        "            \n" +
-                        "        }\n" +
-                        "        console.log( eClasses.indexOf(\"openSlider\") );\n" +
-                        "        if (!slider.contains(e.target) && e.target !== openSliderBtn && eClasses.indexOf(\"openSlider\") < 0) {\n" +
-                        "            closeSlider();\n" +
-                        "        }\n" +
-                        "    }\n" +
-                        "\n" +
-                        "</script>";
+            
+            PluginManager pluginManager = (PluginManager) AppUtil.getApplicationContext().getBean("pluginManager");
+            Map model = new HashMap();
+            model.put("element", this);
+            if(getPropertyString("width") != null){
+                model.put("width", getPropertyString("width"));
+            }else{
+                model.put("width", "50%");
+            }
+
+            content += pluginManager.getPluginFreeMarkerTemplate(model, getClass().getName(), "/template/slider.ftl", null);
+
             request.setAttribute(getClassName(), true);
         }
         
