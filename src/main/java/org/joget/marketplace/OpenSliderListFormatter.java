@@ -131,6 +131,9 @@ public class OpenSliderListFormatter extends DataListColumnFormatDefault  {
             }
         }
         
-        return content + "<span class=\"openSlider btn btn-sm btn-primary\" onClick=\"openSlider('"+ url +"')\">" + getLinkLabel() + "</span>";
+        String displayStyle = getProperty("link-css-display-type").toString();
+        displayStyle += " noAjax";
+        
+        return content + "<a class=\"" + displayStyle + "\" onClick=\"openSlider('"+ url +"')\">" + getLinkLabel() + "</a>";
     }
 }
