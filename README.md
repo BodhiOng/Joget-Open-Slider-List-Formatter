@@ -1,6 +1,9 @@
 # Description
 
-This repository is meant to serve as a general template for how to set up new repositories in the JogetOSS organization. 
+A List Formatter that constructs a link that opens as a slider from the right.
+
+![screenshot-preview](https://github.com/user-attachments/assets/ccd239c0-3884-4ba3-9c7e-d1722af90337)
+
 
 # Getting Help
 
