@@ -3,10 +3,10 @@
       "title":"@@org.joget.marketplace.OpenSliderListFormatter.config@@",
       "properties":[
          {
-            "label":"@@datalist.hyperlinkdatalistaction.hyperlink@@",
+            "label":"@@org.joget.marketplace.OpenSliderListFormatter.hyperlink@@",
             "name":"href",
             "type":"textfield",
-            "description":"@@datalist.hyperlinkdatalistaction.hyperlink.desc@@"
+            "description":"@@org.joget.marketplace.OpenSliderListFormatter.hyperlink.desc@@"
          },
          {
             "label":"@@datalist.hyperlinkdatalistaction.label@@",

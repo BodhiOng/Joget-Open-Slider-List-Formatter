@@ -25,7 +25,7 @@ public class OpenSliderListFormatter extends DataListColumnFormatDefault  {
 
     @Override
     public String getVersion() {
-        return "8.0.1";
+        return "8.0.2";
     }
     
     @Override
@@ -132,7 +132,7 @@ public class OpenSliderListFormatter extends DataListColumnFormatDefault  {
         }
         
         String displayStyle = getProperty("link-css-display-type").toString();
-        displayStyle += " noAjax";
+        displayStyle += " noAjax no-close";
         
         return content + "<a class=\"" + displayStyle + "\" onClick=\"openSlider('"+ url +"')\">" + getLinkLabel() + "</a>";
     }

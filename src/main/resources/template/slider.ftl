@@ -53,9 +53,9 @@
     var handle = document.querySelector('.slider-handle');
 
     // enable resizing at left side of container
-    let isResizing = false;
-    let startX = 0;
-    let startWidth = 0;
+    var isResizing = false;
+    var startX = 0;
+    var startWidth = 0;
 
     // Mouse events
     handle.addEventListener('mousedown', startResize);
@@ -88,7 +88,6 @@
 
     // Function to open the slider
     function openSlider(url) {
-        //console.log("opening" + url);
         closeSlider();
 
         // Clear previous content if any
@@ -103,28 +102,19 @@
         
         // Append the iframe to slider content
         sliderContent.appendChild(iframe);
-        
         slider.classList.add('open');
-        
-        // Add event listener to close slider when clicking outside
-        setTimeout("document.addEventListener('click', clickOutsideHandler)", 500);
     }
 
     // Function to close the slider
     function closeSlider() {
-        //console.log("closing");
         sliderContent.innerHTML = ''; // Clear iframe content
         slider.classList.remove('open');
-        
-        // Remove event listener for clicking outside
-        document.removeEventListener('click', clickOutsideHandler);
     }
 
-    // Event listener for clicking outside the slider
-    function clickOutsideHandler(e) {
-        if (!slider.contains(e.target)) {
+      // Event delegation for clicking outside the slider
+    document.addEventListener('click', function (e) {
+        if (slider.classList.contains('open') && !slider.contains(e.target) && !e.target.closest('.no-close')) {
             closeSlider();
         }
-    }
-
+    });
 </script>
