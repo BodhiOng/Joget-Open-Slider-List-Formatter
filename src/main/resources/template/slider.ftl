@@ -41,10 +41,15 @@
 .slider-container.open {
     right: 0;
 }
+
+.slider-handle {
+    touch-action: none; /* Prevents default scrolling during resize */
+}
+
 </style>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+   document.addEventListener('DOMContentLoaded', function () {
         closeSlider();
     });
 
@@ -52,69 +57,62 @@
     var sliderContent = document.querySelector('.slider-content');
     var handle = document.querySelector('.slider-handle');
 
-    // enable resizing at left side of container
     var isResizing = false;
     var startX = 0;
     var startWidth = 0;
 
-    // Mouse events
-    handle.addEventListener('mousedown', startResize);
-    document.addEventListener('mousemove', onResize);
-    document.addEventListener('mouseup', stopResize);
-
-    // Touch events
-    handle.addEventListener('touchstart', startResize);
-    document.addEventListener('touchmove', onResize);
-    document.addEventListener('touchend', stopResize);
+    // Use pointer events for better tracking
+    handle.addEventListener('pointerdown', startResize);
+    document.addEventListener('pointermove', onResize);
+    document.addEventListener('pointerup', stopResize);
+    document.addEventListener('pointerleave', stopResize); // Handle cases where the pointer leaves the document
 
     function startResize(e) {
         isResizing = true;
-        startX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+        startX = e.clientX;
         startWidth = slider.clientWidth;
+        handle.setPointerCapture(e.pointerId); // Ensures the handle keeps receiving pointer events
         e.preventDefault();
     }
 
     function onResize(e) {
-    if (!isResizing) return;
-        const currentX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+        if (!isResizing) return;
+        const currentX = e.clientX;
         const deltaX = currentX - startX;
         slider.style.width = (startWidth - deltaX) + 'px';
-        e.preventDefault();
     }
 
-    function stopResize() {
+    function stopResize(e) {
         isResizing = false;
+        handle.releasePointerCapture(e.pointerId); // Release the pointer capture
     }
 
     // Function to open the slider
     function openSlider(url) {
         closeSlider();
-
-        // Clear previous content if any
         sliderContent.innerHTML = '';
-        
-        // Create an iframe to load the external content
+
         var iframe = document.createElement('iframe');
         iframe.src = url;
         iframe.style.width = '100%';
-        iframe.style.height = '100%'; // Take full height of slider content area
+        iframe.style.height = '100%';
         iframe.style.border = 'none';
-        
-        // Append the iframe to slider content
+
         sliderContent.appendChild(iframe);
         slider.classList.add('open');
     }
 
     // Function to close the slider
     function closeSlider() {
-        sliderContent.innerHTML = ''; // Clear iframe content
+        sliderContent.innerHTML = '';
         slider.classList.remove('open');
     }
 
-      // Event delegation for clicking outside the slider
+    // Click outside to close
     document.addEventListener('click', function (e) {
         if (slider.classList.contains('open') && !slider.contains(e.target) && !e.target.closest('.no-close')) {
             closeSlider();
         }
     });
+
 </script>
