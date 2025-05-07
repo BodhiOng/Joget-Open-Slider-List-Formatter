@@ -8,12 +8,7 @@
             "type":"textfield",
             "description":"@@org.joget.marketplace.OpenSliderListFormatter.hyperlink.desc@@"
          },
-         {
-            "label":"@@datalist.hyperlinkdatalistaction.label@@",
-            "name":"label",
-            "type":"textfield",
-            "description":"@@datalist.hyperlinkdatalistaction.label.desc@@"
-         },
+         
          {
             "name":"parameters",
             "label":"@@datalist.hyperlinkdatalistaction.hyperlinkParameters@@",
@@ -37,7 +32,7 @@
             "type":"textfield",
             "description":"@@datalist.hyperlinkdatalistaction.label.desc@@",
             "value":"Open",
-            "required":"true"
+            "required":"false"
          },
          {
             "label":"@@org.joget.marketplace.OpenSliderListFormatter.sliderWidth@@",
