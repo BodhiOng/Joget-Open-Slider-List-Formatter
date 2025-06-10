@@ -4,6 +4,7 @@ A List Formatter that constructs a link that opens as a slider from the right.
 
 ![screenshot-preview](https://github.com/user-attachments/assets/ccd239c0-3884-4ba3-9c7e-d1722af90337)
 
+To setup and configure this plugin, please see the [documentation](https://dev.joget.org/community/display/SANDBOX2/Open+Slider+List+Formatter).
 
 # Getting Help
 
