@@ -110,8 +110,8 @@ public class OpenSliderListFormatter extends DataListColumnFormatDefault {
         String content = "";
         HttpServletRequest request = WorkflowUtil.getHttpServletRequest();
 
+        // Only inject the template once per request
         if (request != null && request.getAttribute(getClassName()) == null) {
-
             PluginManager pluginManager = (PluginManager) AppUtil.getApplicationContext().getBean("pluginManager");
             Map model = new HashMap();
             model.put("element", this);
@@ -122,53 +122,18 @@ public class OpenSliderListFormatter extends DataListColumnFormatDefault {
             }
 
             content += pluginManager.getPluginFreeMarkerTemplate(model, getClass().getName(), "/template/slider.ftl", null);
-
             request.setAttribute(getClassName(), true);
         }
 
+        // Get the URL directly from the href property
         String url = getHref();
-        String hrefParam = getHrefParam();
-        String hrefColumn = getHrefColumn();
-
-        if (hrefParam != null && hrefColumn != null && !hrefColumn.isEmpty()) {
-            //DataListCollection rows = dataList.getRows();
-            //String primaryKeyColumnName = dataList.getBinder().getPrimaryKeyColumnName();
-
-            String[] params = hrefParam.split(";");
-            String[] columns = hrefColumn.split(";");
-
-            for (int i = 0; i < columns.length; i++) {
-                if (columns[i] != null && !columns[i].isEmpty()) {
-                    boolean isValid = false;
-                    if (params.length > i && params[i] != null && !params[i].isEmpty()) {
-                        if (url.contains("?")) {
-                            url += "&";
-                        } else {
-                            url += "?";
-                        }
-                        url += params[i];
-                        url += "=";
-                        isValid = true;
-                    } else if (!url.contains("?")) {
-                        if (!url.endsWith("/")) {
-                            url += "/";
-                        }
-                        isValid = true;
-                    }
-
-                    if (isValid) {
-                        String val = DataListService.evaluateColumnValueFromRow(row, columns[i]).toString();
-                        url += val + ";";
-                        //url += getValue(row, columns[i]) + ";";
-                        url = url.substring(0, url.length() - 1);
-                    }
-                }
-            }
-        }
-
+        
+        // Apply basic styling
         String displayStyle = getProperty("link-css-display-type").toString();
         displayStyle += " noAjax no-close";
 
-        return content + "<a class=\"" + displayStyle + "\" onClick=\"openSlider('" + url + "')\">" + getLinkLabel(dataList, row, value) + "</a>";
+        // Return the link with the openSlider function
+        // Use return false to prevent default link behavior
+        return content + "<a class=\"" + displayStyle + "\" onClick=\"return openSlider('" + url + "')\" href=\"javascript:void(0);\">" + getLinkLabel(dataList, row, value) + "</a>";
     }
 }
