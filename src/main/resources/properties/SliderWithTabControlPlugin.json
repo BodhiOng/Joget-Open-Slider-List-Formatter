@@ -1,12 +1,12 @@
 [
    {
-      "title":"@@org.joget.marketplace.OpenSliderListFormatter.config@@",
+      "title":"@@org.joget.marketplace.SliderWithTabControlPlugin.config@@",
       "properties":[
          {
-            "label":"@@org.joget.marketplace.OpenSliderListFormatter.hyperlink@@",
+            "label":"@@org.joget.marketplace.SliderWithTabControlPlugin.hyperlink@@",
             "name":"href",
             "type":"textfield",
-            "description":"@@org.joget.marketplace.OpenSliderListFormatter.hyperlink.desc@@"
+            "description":"@@org.joget.marketplace.SliderWithTabControlPlugin.hyperlink.desc@@"
          },
          
          {
@@ -35,7 +35,7 @@
             "required":"false"
          },
          {
-            "label":"@@org.joget.marketplace.OpenSliderListFormatter.sliderWidth@@",
+            "label":"@@org.joget.marketplace.SliderWithTabControlPlugin.sliderWidth@@",
             "name":"width",
             "type":"textfield",
             "value":"50%",

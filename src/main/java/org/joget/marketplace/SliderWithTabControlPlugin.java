@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.joget.apps.app.service.AppPluginUtil;
 import org.joget.apps.app.service.AppUtil;
 import org.joget.apps.datalist.model.DataList;
@@ -14,18 +16,18 @@ import org.joget.apps.datalist.service.DataListService;
 import org.joget.plugin.base.PluginManager;
 import org.joget.workflow.util.WorkflowUtil;
 
-public class OpenSliderListFormatter extends DataListColumnFormatDefault {
+public class SliderWithTabControlPlugin extends DataListColumnFormatDefault {
 
-    private final static String MESSAGE_PATH = "messages/OpenSliderListFormatter";
+    private final static String MESSAGE_PATH = "messages/SliderWithTabControlPlugin";
 
     @Override
     public String getName() {
-        return AppPluginUtil.getMessage("org.joget.marketplace.OpenSliderListFormatter.pluginLabel", getClassName(), MESSAGE_PATH);
+        return AppPluginUtil.getMessage("org.joget.marketplace.SliderWithTabControlPlugin.pluginLabel", getClassName(), MESSAGE_PATH);
     }
 
     @Override
     public String getVersion() {
-        return "8.0.4";
+        return "1.0.0";
     }
 
     @Override
@@ -36,18 +38,18 @@ public class OpenSliderListFormatter extends DataListColumnFormatDefault {
     @Override
     public String getLabel() {
         //support i18n
-        return AppPluginUtil.getMessage("org.joget.marketplace.OpenSliderListFormatter.pluginLabel", getClassName(), MESSAGE_PATH);
+        return AppPluginUtil.getMessage("org.joget.marketplace.SliderWithTabControlPlugin.pluginLabel", getClassName(), MESSAGE_PATH);
     }
 
     @Override
     public String getDescription() {
         //support i18n
-        return AppPluginUtil.getMessage("org.joget.marketplace.OpenSliderListFormatter.pluginDesc", getClassName(), MESSAGE_PATH);
+        return AppPluginUtil.getMessage("org.joget.marketplace.SliderWithTabControlPlugin.pluginDesc", getClassName(), MESSAGE_PATH);
     }
 
     @Override
     public String getPropertyOptions() {
-        return AppUtil.readPluginResource(getClassName(), "/properties/OpenSliderListFormatter.json", null, true, MESSAGE_PATH);
+        return AppUtil.readPluginResource(getClassName(), "/properties/SliderWithTabControlPlugin.json", null, true, MESSAGE_PATH);
     }
 
     public String getHref() {

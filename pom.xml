@@ -2,10 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.joget.marketplace</groupId>
-    <artifactId>open-slider-list-formatter</artifactId>
+    <artifactId>slider-with-tab-control-plugin</artifactId>
     <packaging>bundle</packaging>
-    <version>8.0.4</version>
-    <name>open-slider-list-formatter</name>
+    <version>1.0.0</version>
+    <name>slider-with-tab-control-plugin</name>
     <url>http://www.joget.org</url>
     <build>
         <plugins>
